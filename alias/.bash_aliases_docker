@@ -1,0 +1,54 @@
+#docker compose
+alias dc='docker compose'
+alias dcps='docker compose ps'
+alias dcps='docker compose ps'
+alias dcb='docker compose build'
+alias dclogs='docker compose logs'
+alias dcup='docker compose up -d'
+alias dcstop='docker compose stop'
+alias dcdown='docker compose down'
+alias dstop='docker stop'
+
+
+
+#docker containers
+alias datt='docker attach'
+alias dexec='docker exec -ti'
+alias dlogs='docker logs -tf --tail="50" '
+alias dps='docker ps'
+#https://docs.docker.com/engine/reference/commandline/ps/#formatting
+alias dpsa='docker ps -a --format "table {{.ID}}\t{{.Image}}\t{{.Names}}\t{{.Status}}\t{{.Ports}}" |  (sed -u 1q; sort -k3)'
+alias drm='docker rm'
+alias drmexited='docker rm -v $(docker ps -aq -f status=exited)'
+alias drun='docker run'
+alias dstart='docker start'
+
+dstremove()
+{
+docker stop $1 && docker rm $1;
+}
+
+#docker images
+alias dimg='docker images | sort'
+alias drmi='docker rmi'
+alias drmidangling='docker rmi $(docker images -f dangling=true -q)'
+dpushimgs()
+{
+docker images | sed '1d' | awk '{print $1 ":" $2}'|grep vadosl > images.txt
+while read image
+ do echo "Pushing $image to Docker Hub"
+ docker push $image
+done < images.txt
+rm images.txt
+}
+
+
+
+
+alias ddiff='docker diff'
+alias dins='docker inspect'
+alias dips="sudo docker ps -q | xargs -n 1 docker inspect --format '{{json .}}' | jq -rs 'map(.Name,.NetworkSettings.Networks[].IPAddress) | .[]'"
+dip() {
+  sudo docker inspect --format '{{json .}}' "$1" | jq -rs 'map(.NetworkSettings.Networks[].IPAddress) | .[]'
+}
+alias lazydocker='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v /home/vados/docker/run/lazydocker/config/:/.config/jesseduffield/lazydocker lazyteam/lazydocker'

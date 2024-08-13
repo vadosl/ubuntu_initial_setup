@@ -1,0 +1,4 @@
+alias speed='speedtest --server-id 48192'
+alias speed_moscow='speedtest --server-id 48192'
+alias speed_euro='speedtest --server-id 53738'
+alias bench='wget -qO - https://raw.githubusercontent.com/teddysun/across/master/bench.sh | bash'

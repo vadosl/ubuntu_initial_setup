@@ -1,0 +1,11 @@
+#My commands
+alias redis-cli='docker exec -it redis-server redis-cli'
+alias psql='docker exec -it instabot psql -h postgres -p 5432 -U arina -d instalike'
+#alias obra='cd ~/deploy/creanova/;docker compose up -d;read -rsp $"Press any key to continue..." -n1 key;screen -AadRRS MAIN -c /home/vados/screen/.screenrc_obra'
+alias dockviz="docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock nate/dockviz" # Usage: dockviz images -t
+alias backup_mongo='scp  -i /home/vados/.ssh/CREANOVA/creanova_privatekey_openssh  vados@91.233.116.18:/backup/backup_mongodb-`date '+%Y-%m-%d'`.tar.gz  /media/vados/DATA/Backup/creanova/'
+alias backup_deploy='scp  -i /home/vados/.ssh/CREANOVA/creanova_privatekey_openssh  vados@91.233.116.18:/backup/backup_deploy-`date '+%Y-%m-%d'`.tar.gz  /media/vados/DATA/Backup/creanova/'
+alias backup_develop='scp  -i /home/vados/.ssh/CREANOVA/creanova_privatekey_openssh  vados@91.233.116.18:/backup/backup_develop-`date '+%Y-%m-%d'`.tar.gz  /media/vados/DATA/Backup/creanova/'
+alias backup_docker='scp  -i /home/vados/.ssh/CREANOVA/creanova_privatekey_openssh  vados@91.233.116.18:/backup/backup_docker-`date '+%Y-%m-%d'`.tar.gz  /media/vados/DATA/Backup/creanova/'
+alias nginx_reload='docker exec  letsencrypt nginx -s reload -c /config/nginx/nginx.conf'
+alias django_template='docker run -e LC_ALL=C.UTF-8 -it --rm -v "$(pwd)":/data/app -v /home/vados/DjangoProjects/layouts/vados-django-template/:/temp/layout  vadosl/django:3   cookiecutter /temp/layout --config-file=/temp/layout/config-file.yaml -f'

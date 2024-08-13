@@ -1,0 +1,47 @@
+# Apply aliases after editing: source ~/.bashrc
+
+
+# FILE SIZE AND STORAGE
+alias fdisk='sudo fdisk -l'
+alias uuid='sudo vol_id -u'
+alias ls='ls -F --color=auto'
+alias ll='ls -alh --color=auto'
+alias lt='ls --human-readable --color=auto --size -1 -S --classify' # file size sorted
+alias lsr='ls --color=auto -t -1' # recently modified
+alias mnt='mount | grep -E ^/dev | column -t' # show mounted drives
+alias dirsz='du -s `pwd`/* | sort -nr | cut -f 2- | while read a; do du -sh "$a"; done'
+alias dirsize='sudo du -hx --max-depth=1'
+alias dirusage='du -ch | grep total' # Grabs the disk usage in the current directory
+alias diskusage='df -hl --total | grep total' # Gets the total disk usage on your machine
+alias partusage='df -hlT --exclude-type=tmpfs --exclude-type=devtmpfs' # Shows the individual partition usages without the temporary memory values
+alias usage10='du -hsx * | sort -rh | head -10' # Gives you what is using the most space. Both directories and files. Varies on current directory
+alias os='cat /etc/*release*' # os distibutive info
+
+# NAVIGATION
+alias cd..='cd ..'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias .3='cd ../../..'
+alias .4='cd ../../../..'
+alias .5='cd ../../../../..'
+
+alias obra='screen -AadRRS MAIN -c /home/vados/screen/.screenrc_obra'
+alias hh='history | egrep -i'
+gr(){ egrep -v '^#|^$' $1; }
+
+
+alias vnc='vncserver :2 -geometry 1280x800 -localhost -depth 16'
+alias download='wget -r -k -l 5 -p -E -nc -np  "$path"'
+alias conf='cat $1 | grep -v "^#" | sed "/^$/d"'
+alias db='psql -h localhost instalike arina'
+alias dockerrm='docker rm -v $(docker ps -aq -f status=exited)'
+
+alias openports='sudo netstat -ntulp'
+alias dfromhistory='docker run  --rm -v /var/run/docker.sock:/var/run/docker.sock vadosl/dockerfile-from-history'
+alias aliasupdate='. ~/.bashrc'
+alias baupdate='. ~/.bashrc'
+alias rus='setxkbmap -layout "us,ru(winkeys)" -model "pc105" -option "grp:alt_shift_toggle"'
+alias rus='setxkbmap -layout "us,ru" -option "grp:rctrl_toggle,grp_led:scroll"'
+#alias httptunnel='hts -S --max-connection-age 20000 -F 91.233.116.18:22 8087'
+alias httptunnel='hts -F 91.233.116.18:22 $1'
+. ~/.bash_aliases_docker
