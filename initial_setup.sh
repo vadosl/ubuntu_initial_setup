@@ -164,15 +164,7 @@ check
 
 run "Установка утилиты fail2ban"
   apt install -y fail2ban
-  # TODO добавить доверенные IP адреса
-  {
-  echo "[sshd]"
-  echo "enabled   = true"
-  echo "maxretry  = 5"
-  echo "findtime  = 1h"
-  echo "bantime   = 1d"
-  ignoreip  = 127.0.0.1/8 100.100.100.100
-  } >> /etc/fail2ban/jail.local
+  cp ./configs/fail2ban/fail2ban.conf  /etc/fail2ban/jail.local
   systemctl enable fail2ban
   systemctl start fail2ban
   fail2ban-client status sshd
@@ -265,6 +257,21 @@ check
 run "Установка других полезных пакетов"
     apt install -y screen telnet nmap netcat htop
 check
+
+run "Скачиваем репозиторий установки"
+
+check
+
+
+run "Установка bash aliases"
+check 
+
+run "Установка tmux"
+# Использеум конфигурацию настройки от 
+
+check 
+
+
 
 
 

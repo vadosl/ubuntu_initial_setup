@@ -1,4 +1,14 @@
 alias speed='speedtest --server-id 48192'
 alias speed_moscow='speedtest --server-id 48192'
 alias speed_euro='speedtest --server-id 53738'
+
+# также работает конфигурация wget -qO bench.sh | bash
 alias bench='wget -qO - https://raw.githubusercontent.com/teddysun/across/master/bench.sh | bash'
+
+# Unixbench
+# Пожалуй, один из самых популярных бенчмарков.
+# Тестирование выполняется по многим параметрам, на основе результатов выводится индекс тестирования. 
+# Эту циферку можно использовать при сравнении тестов в разных условиях или на разных серверах. 
+#Скрипт выполняет установку дополнительного ПО, так что запускать его на проде нужно аккуратно.
+# Запускать под sudo так как устанавливает ПО
+alias bench_unix='wget -qO - https://github.com/teddysun/across/raw/master/unixbench.sh | sudo bash'
