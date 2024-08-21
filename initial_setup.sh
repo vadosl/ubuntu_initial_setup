@@ -183,7 +183,7 @@ run "Установка утилиты git"
 check
 
 run "Скачиваем репозиторий установки"
-  cd /tmp
+  cd /home/${username}
   git clone https://github.com/vadosl/ubuntu_initial_setup.git && \
   chown -R ${username}:${username} ubuntu_initial_setup && \
   cd ubuntu_initial_setup
