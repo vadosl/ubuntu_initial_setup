@@ -1,0 +1,29 @@
+version: "3.7"
+services:
+
+###PORTAINER################################################################################################################
+# admin user = vados, pass = my pass for root/sudo double!!!
+# disabled
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    networks:
+      - default 
+    volumes:
+      - ./portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/localtime:/etc/localtime
+    ports:
+      -  "127.0.0.1:9443:9443"
+      -  "127.0.0.1:9100:9000"
+#    command: sh -c 'echo Service disabled'
+    command: -H unix:///var/run/docker.sock
+    restart: always
+    environment:
+        - TZ=$TZ
+
+### NETWORKS ################################################################################################################
+networks:      
+  default:
+    driver: bridge
+

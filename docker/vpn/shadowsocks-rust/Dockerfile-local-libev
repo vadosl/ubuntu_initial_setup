@@ -1,0 +1,7 @@
+FROM vadosl/shadowsocks:libev AS build
+RUN ls -lh /usr/local/bin/ss-local
+FROM scratch
+LABEL maintainer="hyperion.spb@gmail.com"
+COPY --from=build /usr/local/bin/ss-local /
+ENTRYPOINT ["/ss-local"]
+EXPOSE 443

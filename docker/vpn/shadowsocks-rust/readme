@@ -1,0 +1,9 @@
+Докерфайлы  созданы компиляцией разных исходников из  из гитхаба
+ - https://github.com/suconghou/docker/tree/95c16f475feebc3c3880df8138c26f6bfdb7d0e9/shadowsocks
+ - https://github.com/shadowsocks/shadowsocks-rust/tree/master
+ 
+ 
+ 
+Nginx and shadowsocks https://github.com/M3chD09/shadowsocks-with-v2ray-plugin-install/tree/master/docker
+ 
+ 

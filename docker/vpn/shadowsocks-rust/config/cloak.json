@@ -1,0 +1,16 @@
+{
+  "RedirAddr": "www.yandex.ru",
+  "BindAddr": [":8083",":83"],
+  "ProxyBook": {
+    "shadowsocks": [
+      "tcp",
+      "localhost:8389"
+    ]
+  },
+  "PrivateKey": "aIkWNJs1oNnR+YQupiD1q9d5Zbm/EWZa5BuApp3bDUE=",
+  "BypassUID": [
+      "yVfYa6XV46bWEMDjuKUnIw=="
+  ],
+   "AdminUID": "rGnC5ifZoe9BJjBnvOspmw==",
+   "DatabasePath": "/etc/shadowsocks-rust/userinfo.db"
+}

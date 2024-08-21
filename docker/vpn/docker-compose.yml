@@ -1,0 +1,100 @@
+version: "3.7"
+services:
+
+  adguardhome:
+    image: adguard/adguardhome
+    container_name: adguardhome
+    hostname: adguardhome
+    restart: always
+    networks: 
+        default:
+            ipv4_address: 172.31.0.3 # fixed IP address
+    volumes:
+      - ./adguard/conf/:/opt/adguardhome/conf
+      - ./adguard/workdir:/opt/adguardhome/work
+    ports: 
+      - "8080:80/tcp" # AdGuard Home's admin panel
+      - "127.0.0.1:53:53/tcp" # DNS (see how to block internal resolver https://hub.docker.com/r/adguard/adguardhome#resolved-daemon)
+      - "127.0.0.1:53:53/udp"
+      #- 67:67/udp #DHCP Server
+      #- 784:784/udp # DNS over QUIC
+      #- 853:853/tcp # DNS over TLS
+      - "3000:3000/tcp" # initial installation
+      #- "4443:443/tcp" # DNS over HTTPs
+      #- "5443:5443/tcp" #DNSCrypt server.
+      #- "5443:5443/udp" #DNSCrypt server.
+#    entrypoint: ["echo", "Service foo disabled"]
+    
+    
+###SHADOWSOCKS-LIBEV################################################################################################################
+ 
+  shadowsocks-libev:
+    image: vadosl/shadowsocks:libev
+    build: shadowsocks-libev/
+    container_name: shadowsocks-libev
+    ports:
+        
+        # - "8443:8388/tcp"
+        # - "8443:8388/udp"
+        # - "5443:8388/tcp"
+        # - "8090:8388/udp"
+        # - "7443:8388/tcp"
+        - "4443:8388/tcp"
+    environment:
+        - SERVER_ADDR=0.0.0.0
+        - SERVER_PORT=8388
+#       - DNS_ADDRS=8.8.8.8,8.8.4.4
+        - DNS_ADDRS=1.1.1.1,1.0.0.1
+        - METHOD=chacha20-ietf-poly1305
+        - PASSWORD=12345
+        - ARGS=-v # verbose mode
+        
+#    restart: always
+    restart: "no"
+    entrypoint: ["echo", "Service shadowsocks- disabled"]
+###SHADOWSOCKS-RUST################################################################################################################
+# Более быстрая реализация shadowsocks на языке rust. Исходники из https://github.com/shadowsocks/shadowsocks-rust. 
+# Порт 8443 - для доступа с работы (другие порты закрыты pfSense)
+  shadowsocks-rust:
+    image: vadosl/shadowsocks:rust
+    build: 
+        context: shadowsocks-rust
+        dockerfile: Dockerfile-rust
+   
+    env_file: shadowsocks-rust/shadowsocks-rust.env    
+    container_name: shadowsocks-rust
+    networks: 
+        default:
+            ipv4_address: 172.31.0.5 # fixed IP address   
+    # environment:
+        # - SERVER_ADDR=${SERVER_ADDR}
+        # - SERVER_PORT=${SERVER_PORT}
+        # - VPN_PORT=${VPN_PORT}
+        # - DNS_ADDRS=${DNS_ADDRS}
+        # - METHOD=${METHOD}
+        # - PASSWORD=${PASSWORD}
+        # - TIMEOUT=${TIMEOUT}
+    ports: 
+        - "8443:8388/tcp"
+        - "8443:8388/udp"
+        - "83:83/tcp"
+        - "83:83/udp"
+    volumes:
+        - ./shadowsocks-rust/config/:/etc/shadowsocks-rust/
+    restart: always
+    depends_on:
+      - adguardhome
+#    user: vados
+    tty: true
+#    command: /bin/sh
+#    restart: "no"
+#    entrypoint: ["echo", "Service foo disabled"]
+
+### NETWORKS ################################################################################################################
+
+networks:
+  default:
+    ipam:
+       config:
+         - subnet: 172.31.0.1/24 
+    
