@@ -230,6 +230,7 @@ check
 run "Установка утилиты hstr удобного поиска в командной строке"
     apt install -y hstr
     hstr --show-configuration >> ~/.bashrc
+    execAsUser ${username} 'hstr --show-configuration >> ~/.bashrc'
 check
 
 
@@ -240,25 +241,25 @@ check
 run "Установка и настройка утилиты mc"
   apt install -y mc && \
   cp ./configs/mc/mc.ini /etc/mc/mc.ini && \
-  execAsUser ${username} 'mkdir -p ~/.config/mc && cp ./configs/mc/hotlist ~/.config/mc/hotlist'
+  execAsUser ${username} 'mkdir -p ~/.config/mc && cp ~/ubuntu_initial_setup/configs/mc/hotlist ~/.config/mc/hotlist'
 check
 
 run "Настройка конфига "
   
-  execAsUser ${username} 'cp ./configs/vim/* ~'
+  execAsUser ${username} 'cp ~/ubuntu_initial_setup/configs/vim/* ~'
   
 check
 
 
 run "Установка bash aliases"
-  execAsUser ${username} 'cp ./configs/alias/.bash_alias* ~'
+  execAsUser ${username} 'cp ~/ubuntu_initial_setup/configs/alias/.bash_alias* ~'
 check 
 
 run "Установка tmux и tmuxinator"
 # Использеум конфигурацию настройки от 
   apt install -y tmux tmuxinator && \
-  execAsUser ${username} 'cp -r ./configs/tmux/.tmux ~' && \
-  execAsUser ${username} 'cp -r ./configs/tmux/.tmuxinator ~' && \
+  execAsUser ${username} 'cp -r ~/ubuntu_initial_setup/configs/tmux/.tmux ~' && \
+  execAsUser ${username} 'cp -r ~/ubuntu_initial_setup/configs/tmux/.tmuxinator ~' && \
   execAsUser ${username} 'ln -s -f ~/.tmux/.tmux.conf ~' && \
   execAsUser ${username} 'cp ~/.tmux/.tmux.conf.local ~'
 check 
