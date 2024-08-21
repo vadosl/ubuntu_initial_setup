@@ -246,7 +246,7 @@ check
 
 run "Настройка конфига "
   
-  execAsUser ${username} 'cp ~/ubuntu_initial_setup/configs/vim/.* ~'
+  execAsUser ${username} 'cp ~/ubuntu_initial_setup/configs/vim/. ~/'
   
 check
 
