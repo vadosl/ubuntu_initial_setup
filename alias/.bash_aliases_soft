@@ -9,3 +9,4 @@ alias backup_develop='scp  -i /home/vados/.ssh/CREANOVA/creanova_privatekey_open
 alias backup_docker='scp  -i /home/vados/.ssh/CREANOVA/creanova_privatekey_openssh  vados@91.233.116.18:/backup/backup_docker-`date '+%Y-%m-%d'`.tar.gz  /media/vados/DATA/Backup/creanova/'
 alias nginx_reload='docker exec  letsencrypt nginx -s reload -c /config/nginx/nginx.conf'
 alias django_template='docker run -e LC_ALL=C.UTF-8 -it --rm -v "$(pwd)":/data/app -v /home/vados/DjangoProjects/layouts/vados-django-template/:/temp/layout  vadosl/django:3   cookiecutter /temp/layout --config-file=/temp/layout/config-file.yaml -f'
+alias tx=tmuxinator

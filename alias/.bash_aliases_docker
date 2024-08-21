@@ -7,6 +7,7 @@ alias dclogs='docker compose logs'
 alias dcup='docker compose up -d'
 alias dcstop='docker compose stop'
 alias dcdown='docker compose down'
+alias dcrestart='docker compose restart'
 alias dstop='docker stop'
 
 

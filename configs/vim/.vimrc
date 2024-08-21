@@ -4,6 +4,19 @@ syntax on
 set tabstop=4
 set shiftwidth=4
 set smarttab
+set expandtab "Ставим табы пробелами
+set softtabstop=4 "4 пробела в табе
+
+" Автоотступ
+set autoindent
+
+" Подсвечиваем все что можно подсвечивать
+let python_highlight_all = 1
+" Включаем 256 цветов в терминале, мы ведь работаем из иксов?
+
+" Нужно во многих терминалах, например в gnome-terminal
+set t_Co=256
+
 " включим автозамену по умолчанию
 set et
 " попросим Vim переносить длинные строки
@@ -12,6 +25,8 @@ set wrap
 set ai
 "включим отступы в стиле Си
 set cin
+
+syntax on "Включить подсветку синтаксиса
 
 "Далее настроим поиск и подсветку результатов поиска и совпадения скобок
 set showmatch
@@ -24,8 +39,23 @@ set lz
 "Показываем табы в начале строки точками
 set listchars=tab:··
 set list
-"Порядок применения кодировок и формата файлов
 
+" set nu "Включаем нумерацию строк
+set mousehide "Спрятать курсор мыши когда набираем текст
+set mouse=a "Включить поддержку мыши
+set termencoding=utf-8 "Кодировка терминала
+set novisualbell "Не мигать 
+
+" Вырубаем .swp и ~ (резервные) файлы
+set nobackup
+set noswapfile
+set encoding=utf-8 " Кодировка файлов по умолчанию
+set fileencodings=utf8,cp1251
+
+set clipboard=unnamed
+set ruler
+
+"Порядок применения кодировок и формата файлов
 set ffs=unix,dos,mac
 set fencs=utf-8,cp1251,koi8-r,ucs-2,cp866
 

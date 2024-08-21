@@ -1,3 +1,4 @@
+alias ping='ping -c 4'
 alias speed='speedtest --server-id 48192'
 alias speed_moscow='speedtest --server-id 48192'
 alias speed_euro='speedtest --server-id 53738'

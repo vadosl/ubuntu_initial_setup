@@ -159,17 +159,6 @@ run "Настройка языка и региональных стандарт�
   dpkg-reconfigure --frontend noninteractive locales
 check
 
-
-# === НАСТРОЙКА ЗАЩИТЫ ОТ ПЕРЕБОРА ПАРОЛЕЙ === #
-
-run "Установка утилиты fail2ban"
-  apt install -y fail2ban
-  cp ./configs/fail2ban/fail2ban.conf  /etc/fail2ban/jail.local
-  systemctl enable fail2ban
-  systemctl start fail2ban
-  fail2ban-client status sshd
-check
-
 # === НАСТРОЙКА FIREWALL === #
 
 run "Установка и настройка утилиты ufw"
@@ -189,48 +178,41 @@ run "Проверка статуса ufw"
     ufw status
 check
 
+run "Установка утилиты git"
+    apt install -y git
+check
 
-
+run "Скачиваем репозиторий установки"
+  cd /tmp
+  git clone https://github.com/vadosl/ubuntu_initial_setup.git && \
+  chown -R ${username}:${username} ubuntu_initial_setup && \
+  cd ubuntu_initial_setup
+check
 # === НАСТРОЙКА SSH === #
 
 run "Настройка параметров SSH"
   apt install -y sed && \
-  sed -i "/^Port/s/^/# /" /etc/ssh/sshd_config && \
-  sed -i "/^PermitRootLogin/s/^/# /" /etc/ssh/sshd_config && \
-  sed -i "/^AllowUsers/s/^/# /" /etc/ssh/sshd_config && \
-  sed -i "/^PermitEmptyPasswords/s/^/# /" /etc/ssh/sshd_config && \
-  {
-    echo "Port ${port_ssh}"
-    echo "Port 445"
-    echo "Port 8088"
-    echo "Port 8843"
-    echo "Port 1025"
-    echo "PermitRootLogin yes"
-    echo "AllowUsers ${username}"
-    echo "PermitEmptyPasswords no"
-  } >> /etc/ssh/sshd_config
+# Теоретически можно sed'ом не закомменчивать старые значения в sshd_config, так как вверху стоит инструкция include ...sshd_config.d/*,
+# поэтому наш пользовательский файл с ключами сработает первым и будет иметь приоритет перед основным файлам
+#  sed -i "/^Port/s/^/# /" /etc/ssh/sshd_config && \
+#  sed -i "/^PermitRootLogin/s/^/# /" /etc/ssh/sshd_config && \
+#  sed -i "/^AllowUsers/s/^/# /" /etc/ssh/sshd_config && \
+#  sed -i "/^PermitEmptyPasswords/s/^/# /" /etc/ssh/sshd_config && \
+   cp ./configs/sshd/10-my.conf /etc/ssh/sshd_config.d/
   # Перезапуск демона, в старых версиях  убунту может быть другой синтаксис
-  systemctl&nbsp;restart&nbsp;ssh.service
+  systemctl restart ssh.service
 check
 
+# === НАСТРОЙКА ЗАЩИТЫ ОТ ПЕРЕБОРА ПАРОЛЕЙ === #
+
+run "Установка утилиты fail2ban"
+  apt install -y fail2ban
+  cp ./configs/fail2ban/fail2ban.conf  /etc/fail2ban/jail.local
+  systemctl enable fail2ban
+  systemctl start fail2ban
+  fail2ban-client status sshd
+check
 # === УСТАНОВКА ПРОГРАММ === #
-
-run "Установка и настройка утилиты mc"
-    apt install -y mc && \
-  {
-    echo "[Midnight-Commander]"
-    echo "use_internal_view=true"
-    echo "use_internal_edit=true"
-    echo "editor_syntax_highlighting=true"
-    echo "skin=modarin256"
-    echo "[Layout]"
-    echo "message_visible=0"
-    echo "xterm_title=0"
-    echo "command_prompt=0"
-    echo "[Panels]"
-    echo "show_mini_info=false"
-  } > /etc/mc/mc.ini
-check
 
 run "Установка утилиты curl"
     apt install -y curl
@@ -240,9 +222,6 @@ run "Установка утилиты wget"
     apt install -y wget
 check
 
-run "Установка утилиты git"
-    apt install -y git
-check
 
 run "Установка утилиты net-tools"
     apt install -y net-tools
@@ -258,17 +237,30 @@ run "Установка других полезных пакетов"
     apt install -y screen telnet nmap netcat htop
 check
 
-run "Скачиваем репозиторий установки"
+run "Установка и настройка утилиты mc"
+  apt install -y mc && \
+  cp ./configs/mc/mc.ini /etc/mc/mc.ini && \
+  execAsUser ${username} 'mkdir -p ~/.config/mc && cp ./configs/mc/hotlist ~/.config/mc/hotlist'
+check
 
+run "Настройка конфига "
+  
+  execAsUser ${username} 'cp ./configs/vim/* ~'
+  
 check
 
 
 run "Установка bash aliases"
+  execAsUser ${username} 'cp ./configs/alias/.bash_alias* ~'
 check 
 
-run "Установка tmux"
+run "Установка tmux и tmuxinator"
 # Использеум конфигурацию настройки от 
-
+  apt install -y tmux tmuxinator && \
+  execAsUser ${username} 'cp -r ./configs/tmux/.tmux ~' && \
+  execAsUser ${username} 'cp -r ./configs/tmux/.tmuxinator ~' && \
+  execAsUser ${username} 'ln -s -f ~/.tmux/.tmux.conf ~' && \
+  execAsUser ${username} 'cp ~/.tmux/.tmux.conf.local ~'
 check 
 
 
