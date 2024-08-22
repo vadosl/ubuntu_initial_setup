@@ -209,8 +209,11 @@ check
 run "Установка утилиты fail2ban"
   apt install -y fail2ban
   cp ./configs/fail2ban/fail2ban.conf  /etc/fail2ban/jail.local
+  mkdir /var/run/fail2ban/
   systemctl enable fail2ban
+  /bin/sleep 2
   systemctl start fail2ban
+  /bin/sleep 1
   fail2ban-client status sshd
 check
 # === УСТАНОВКА ПРОГРАММ === #
