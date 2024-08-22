@@ -194,11 +194,12 @@ run "Настройка параметров SSH"
   apt install -y sed && \
 # Теоретически можно sed'ом не закомменчивать старые значения в sshd_config, так как вверху стоит инструкция include ...sshd_config.d/*,
 # поэтому наш пользовательский файл с ключами сработает первым и будет иметь приоритет перед основным файлам
-#  sed -i "/^Port/s/^/# /" /etc/ssh/sshd_config && \
-#  sed -i "/^PermitRootLogin/s/^/# /" /etc/ssh/sshd_config && \
-#  sed -i "/^AllowUsers/s/^/# /" /etc/ssh/sshd_config && \
-#  sed -i "/^PermitEmptyPasswords/s/^/# /" /etc/ssh/sshd_config && \
-   cp ./configs/sshd/10-my.conf /etc/ssh/sshd_config.d/
+  sed -i "/^Port/s/^/# /" /etc/ssh/sshd_config && \
+  sed -i "/^PermitRootLogin/s/^/# /" /etc/ssh/sshd_config && \
+  sed -i "/^AllowUsers/s/^/# /" /etc/ssh/sshd_config && \
+  sed -i "/^PermitEmptyPasswords/s/^/# /" /etc/ssh/sshd_config && \
+  cp ./configs/sshd/10-my.conf /etc/ssh/sshd_config.d/
+
   # Перезапуск демона, в старых версиях  убунту может быть другой синтаксис
   systemctl restart ssh.service
 check
