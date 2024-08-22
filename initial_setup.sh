@@ -252,7 +252,7 @@ check
 
 
 run "Установка bash aliases"
-  execAsUser ${username} 'cp ~/ubuntu_initial_setup/configs/alias/.bash_alias* ~'
+  execAsUser ${username} 'cp ~/ubuntu_initial_setup/alias/.bash_alias* ~'
 check 
 
 run "Установка tmux и tmuxinator"
