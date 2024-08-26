@@ -112,6 +112,8 @@ port_ssh=22
 
 echo -en "\n${cyan}Введите имя нового пользователя: ${end}"; read username
 echo -en "${cyan}Введите пароль нового пользователя: ${end}"; read -r password
+echo -en "${cyan}Домашний компьютер (1) или сервер (2)?: ${end}"; read -r variant
+echo -en "${cyan}Нужна локализация (1) или нет (2)?: ${end}"; read -r localization
 
 
 
@@ -151,13 +153,17 @@ check
 
 # === НАСТРОЙКА ЯЗЫКА И РЕГИОНАЛЬНЫХ СТАНДАРТОВ === #
 
+if [[ $localization -eq 1 ]] 
+    then 
 run "Настройка языка и региональных стандартов"
-    apt install -y language-pack-ru
-    locale-gen ru_RU && \
-  locale-gen ru_RU.UTF-8 && \
-  update-locale LANG=ru_RU.UTF-8 && \
-  dpkg-reconfigure --frontend noninteractive locales
+    
+     apt install -y language-pack-ru
+     locale-gen ru_RU && \
+     locale-gen ru_RU.UTF-8 && \
+     update-locale LANG=ru_RU.UTF-8 && \
+     dpkg-reconfigure --frontend noninteractive locales
 check
+fi
 
 # === НАСТРОЙКА FIREWALL === #
 
@@ -308,9 +314,13 @@ run "Docker должен быть установлен, демон-процес�
   systemctl status docker
 check
 
-# === СОЗДАНИЕ СТРУКТУРЫ СЕРВЕРА === #
-
-
+if [[ $variant -eq 1 ]] 
+    then 
+# === УСТАНОВКА НА ДОМАШНИЙ КОМПЬЮТЕР === #
+run "Установка программ для домашнего компьютера"
+    apt install -y keepass2 gdeby synaptic doublecmd-gtk libunrar5
+check
+fi
 
 
 # === ОЧИСТКА ПЕРЕД ЗАВЕРШЕНИЕМ === #
