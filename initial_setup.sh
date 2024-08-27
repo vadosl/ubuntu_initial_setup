@@ -191,6 +191,7 @@ check
 
 run "Скачиваем репозиторий установки"
   cd /home/${username}
+  rm -rf ubuntu_initial_setup
   git clone https://github.com/vadosl/ubuntu_initial_setup.git && \
   chown -R ${username}:${username} ubuntu_initial_setup && \
   cd ubuntu_initial_setup
