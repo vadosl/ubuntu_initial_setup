@@ -112,8 +112,8 @@ port_ssh=22
 
 echo -en "\n${cyan}Введите имя нового пользователя: ${end}"; read username
 echo -en "${cyan}Введите пароль нового пользователя: ${end}"; read -r password
-echo -en "${cyan}Домашний компьютер (1) или сервер (2)?: ${end}"; read -r variant
-echo -en "${cyan}Нужна локализация (1) или нет (2)?: ${end}"; read -r localization
+echo -en "${cyan}Домашний компьютер [Y/n]: ${end}"; read -r personal
+echo -en "${cyan}Нужна локализация [Y/n]: ${end}"; read -r localization
 
 
 
@@ -153,7 +153,8 @@ check
 
 # === НАСТРОЙКА ЯЗЫКА И РЕГИОНАЛЬНЫХ СТАНДАРТОВ === #
 
-if [[ $localization -eq 1 ]] 
+temp=$(echo ${localization^^})
+if [[ $temp -eq "Y" ]] 
     then 
 run "Настройка языка и региональных стандартов"
     
@@ -314,10 +315,13 @@ run "Docker должен быть установлен, демон-процес�
   systemctl status docker
 check
 
-if [[ $variant -eq 1 ]] 
+temp=$(echo ${personal^^})
+if [[ $temp -eq "Y" ]] 
     then 
 # === УСТАНОВКА НА ДОМАШНИЙ КОМПЬЮТЕР === #
 run "Установка программ для домашнего компьютера"
+    add-apt-repository ppa:ubuntuhandbook1/keepass2
+    apt update
     apt install -y keepass2 gdeby synaptic doublecmd-gtk libunrar5
 check
 fi
