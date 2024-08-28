@@ -94,8 +94,9 @@ echo "┌───────────────────────�
 echo "│       ${clr}   SETUP.SH  v0.0.1             │"
 echo "├─────────────────────────────────────────────┤"
 echo "│ Данный скрипт выполняет первичную настройку │"
-echo "│ сервера VDS 'VADOS' на базе Ubuntu 22.04  │"
+echo "│ сервера VDS 'VADOS' на базе Ubunt  u 22.04  │"
 echo "└─────────────────────────────────────────────┘"
+echo " Переделка github.com/zavodteplic/unbar.sh/blob/master/unbar.sh"
 echo -en "$end"
 
 # Вывод информации о системе
@@ -229,6 +230,10 @@ check
 run "Установка утилиты curl"
     apt install -y curl
 check
+run "Установка vim"
+    apt install -y vim
+check
+
 
 run "Установка утилиты wget"
     apt install -y wget
@@ -254,6 +259,7 @@ run "Установка и настройка утилиты mc"
   apt install -y mc && \
   cp ./configs/mc/mc.ini /etc/mc/mc.ini && \
   execAsUser ${username} 'mkdir -p ~/.config/mc && cp ~/ubuntu_initial_setup/configs/mc/hotlist ~/.config/mc/hotlist'
+  execAsUser ${username} 'cp ~/ubuntu_initial_setup/configs/mc/mc.ini ~/.config/mc/ini'
 check
 
 run "Настройка конфига "

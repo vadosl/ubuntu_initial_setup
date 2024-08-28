@@ -1,6 +1,6 @@
 # ~/.tmuxinator/sample.yml
 
-name: sample
+name: obra
 root: ~/
 
 # Optional tmux socket
@@ -36,7 +36,7 @@ root: ~/
 # tmux_command: byobu
 
 # Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
-startup_window: htop
+startup_window: HTOP
 
 # Specifies (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
 # startup_pane: 1
@@ -79,28 +79,53 @@ windows:
           - vim
         - guard
 
-  - info:
+  - infa:
       # как определить такой layout tmux list-windows https://youtu.be/PbONP7dbnX0?si=za5YWEoPqPQrM2PT&t=813
       layout: b147,208x73,0,0[208x62,0,0,208x10,0,63{104x10,0,63,103x10,105,63}]
       panes:
          - vim
          - #empty, will just run plain bash
          - top
-  - htop:htop
+  - HTOP: htop
   
   #This layout creates 3 unequally sized panes with vim in one of them. 
   #Be careful with spaces and if you try this make sure to include the colon and a newline on the last line as shown:
   - VIM:
-    layout: main-vertical
-    panes:
-      - tmux split-window -d ; M=0; while [ "$M" -lt 9 ]; do (( M+=1 )); tmux resize-pane -D; done; vim
-      - ;
+      layout: main-vertical
+      panes:
+       - tmux split-window -d ; M=0; while [ "$M" -lt 9 ]; do (( M+=1 )); tmux resize-pane -D; done; vim
+       - ;
   - AUTH:
-  layout: main-horizontal
-  panes:
-    - auth: sudo tail -f /var/log/auth.log
-    - fail2ban: sudo tail -f /var/log/fail2ban.log
-  -LAZY:lazydocker    
+     layout: main-horizontal
+     panes:
+        - auth: sudo tail -f /var/log/auth.log
+        - fail2ban: sudo tail -f /var/log/fail2ban.log
+  - LAZY: lazydocker    
       
       
-      
+ #This layout creates 3 unequally sized panes with vim in one of them. 
+ #Be careful with spaces and if you try this make sure to include the colon and a newline on the last line as shown:
+  - VIM:
+      layout: main-vertical
+      panes:
+        - tmux split-window -d ; M=0; while [ "$M" -lt 9 ]; do (( M+=1 )); tmux resize-pane -D; done; vim
+        - ;
+  - AUTH:
+      layout: main-horizontal
+      panes:
+       - auth: sudo tail -f /var/log/auth.log
+       - fail2ban: sudo tail -f /var/log/fail2ban.log
+  - AEZA:  
+       layout: main-horizontal
+       panes:
+           - vpn_log
+           - fail2ban_log
+     
+  - HSHP:
+      layout: main-horizontal
+      panes:
+          - vpn_log
+          - fail2ban_log
+        
+
+
