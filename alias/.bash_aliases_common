@@ -36,11 +36,9 @@ alias conf='cat $1 | grep -v "^#" | sed "/^$/d"'
 alias db='psql -h localhost instalike arina'
 alias dockerrm='docker rm -v $(docker ps -aq -f status=exited)'
 
-alias openports='sudo netstat -ntulp'
+
 alias dfromhistory='docker run  --rm -v /var/run/docker.sock:/var/run/docker.sock vadosl/dockerfile-from-history'
 alias aliasupdate='. ~/.bashrc'
 alias baupdate='. ~/.bashrc'
 alias rus='setxkbmap -layout "us,ru(winkeys)" -model "pc105" -option "grp:alt_shift_toggle"'
 alias rus='setxkbmap -layout "us,ru" -option "grp:rctrl_toggle,grp_led:scroll"'
-#alias httptunnel='hts -S --max-connection-age 20000 -F 91.233.116.18:22 8087'
-alias httptunnel='hts -F 91.233.116.18:22 $1'
