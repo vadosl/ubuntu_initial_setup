@@ -30,7 +30,7 @@ docker stop $1 && docker rm $1;
 }
 
 #docker images
-alias dimg='docker images | sort'
+alias dimg="docker images | { sed -u 1q; sort; }" 
 alias drmi='docker rmi'
 alias drmidangling='docker rmi $(docker images -f dangling=true -q)'
 dpushimgs()
