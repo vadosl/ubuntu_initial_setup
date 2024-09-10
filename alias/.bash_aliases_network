@@ -1,0 +1,7 @@
+Red='\033[0;31m'
+Yellow='\033[0;33m'
+NoColor='\033[0m' # No Color
+alias connections="echo -e ${Yellow} 'Show apps that use internet connection at the moment' ${NoColor} && lsof -P -i -n"
+#alias httptunnel='hts -S --max-connection-age 20000 -F 91.233.116.18:22 8087'
+alias httptunnel='hts -F 91.233.116.18:22 $1'
+alias openports='sudo netstat -ntulp'
