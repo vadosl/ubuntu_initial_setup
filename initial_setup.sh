@@ -94,7 +94,7 @@ echo "┌───────────────────────�
 echo "│       ${clr}   SETUP.SH  v0.0.1             │"
 echo "├─────────────────────────────────────────────┤"
 echo "│ Данный скрипт выполняет первичную настройку │"
-echo "│ сервера VDS 'VADOS' на базе Ubunt  u 22.04  │"
+echo "│ сервера VDS 'VADOS' на базе Ubuntu  u 22.04  │"
 echo "└─────────────────────────────────────────────┘"
 echo " Переделка github.com/zavodteplic/unbar.sh/blob/master/unbar.sh"
 echo -en "$end"
@@ -218,7 +218,12 @@ check
 run "Установка утилиты fail2ban"
   apt install -y fail2ban
   cp ./configs/fail2ban/fail2ban.conf  /etc/fail2ban/jail.local
-  [ -d /var/run/fail2ban ] && echo "Directory fail2ban Exists" || mkdir /var/run/fail2ban/
+  if [[ -d /var/run/fail2ban ]]
+  then
+   echo "Directory fail2ban Exists" 
+  else 
+    mkdir /var/run/fail2ban/
+  fi
   systemctl enable fail2ban
   /bin/sleep 2
   systemctl start fail2ban
@@ -260,6 +265,7 @@ run "Установка и настройка утилиты mc"
   cp ./configs/mc/mc.ini /etc/mc/mc.ini && \
   execAsUser ${username} 'mkdir -p ~/.config/mc && cp ~/ubuntu_initial_setup/configs/mc/hotlist ~/.config/mc/hotlist'
   execAsUser ${username} 'cp ~/ubuntu_initial_setup/configs/mc/mc.ini ~/.config/mc/ini'
+  mkdir -p /root/.config/mc && cp ~/ubuntu_initial_setup/configs/mc/hotlist /root/.config/mc/hotlist
 check
 
 run "Настройка конфига "
