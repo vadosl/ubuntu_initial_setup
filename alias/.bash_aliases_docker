@@ -44,8 +44,6 @@ rm images.txt
 }
 
 
-
-
 alias ddiff='docker diff'
 alias dins='docker inspect'
 alias dips="sudo docker ps -q | xargs -n 1 docker inspect --format '{{json .}}' | jq -rs 'map(.Name,.NetworkSettings.Networks[].IPAddress) | .[]'"
@@ -53,3 +51,10 @@ dip() {
   sudo docker inspect --format '{{json .}}' "$1" | jq -rs 'map(.NetworkSettings.Networks[].IPAddress) | .[]'
 }
 alias lazydocker='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v /home/vados/docker/run/lazydocker/config/:/.config/jesseduffield/lazydocker lazyteam/lazydocker'
+
+# Transferring a Docker image via SSH, bzipping the content on the fly:
+# Note that docker load automatically decompresses images for you. It supports gzip, bzip2 and xz.
+# It's also a good idea to put pv in the middle of the pipe to see how the transfer is going:
+# sudo apt install pv
+alias dctransferimage='docker save $1 | bzip2 | pv | ssh -p 8088 $2 docker load'
+
