@@ -257,7 +257,7 @@ check
 
 
 run "Установка других полезных пакетов"
-    apt install -y screen telnet nmap netcat htop dnsutils
+    apt install -y screen telnet nmap netcat htop dnsutils ncdu
 check
 
 run "Установка и настройка утилиты mc"
