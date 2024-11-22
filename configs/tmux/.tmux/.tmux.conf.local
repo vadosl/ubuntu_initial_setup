@@ -404,6 +404,12 @@ bind - split-window -v
 bind -n S-Left  previous-window
 bind -n S-Right next-window
 
+# Переключаться между панелями внутри окон клавишами Alt + → ← ↑ ↓
+bind -n M-Left select-pane -L
+bind -n M-Right select-pane -R
+bind -n M-Up select-pane -U
+bind -n M-Down select-pane -D
+
 # Переключаться циклично между двумя посдедними окнами
 bind C-a last-window
 
