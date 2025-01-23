@@ -307,7 +307,7 @@ run "Установка официального ключа GPG Docker"
 check
 
 run "Добавление репозитория Docker"
-     add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && \
+     add-apt-repository -y "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && \
   apt update
   # Убедитесь, что установка будет выполняться из репозитория Docker, а не из репозитория Ubuntu по умолчанию:
     apt-cache policy docker-ce
@@ -348,7 +348,7 @@ check
 
 # === ЗАВЕРШЕНИЕ РАБОТЫ СКРИПТА === #
 
-ip=$(wget -qO- ifconfig.co)
+ip=$(wget -q4O- ifconfig.co)
 
 echo -e "${clr}${clr}${clr}${clr}${clr}${clr}${end}\n"
 
