@@ -242,6 +242,8 @@ check
 
 run "Установка утилиты wget"
     apt install -y wget
+    sed -i "/^prefer-family/s/^/# /" /etc/wgetrc
+    echo "prefer-family = IPv4" >> /etc/wgetrc
 check
 
 
